@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { useEffect, useRef, useState } from 'react';
 import { v1 as uuidv1 } from 'uuid';
 import './Home.css';
@@ -13,11 +13,21 @@ const Home: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [taskContent, setTaskContent] = useState<string>('');
   const inputTaskRef = useRef<any>(null);
+  const taskListItems = tasks.map(task => {
+    return(
+      <IonItem key={task.id}>
+        <IonLabel>
+          <h2>{`${task.date.toDateString()} ${task.date.toTimeString()}`}</h2>
+          <h1>{task.content}</h1>
+        </IonLabel>
+      </IonItem>
+    )
+  });
 
   useEffect(() => {
     inputTaskRef.current.setFocus();
-  });
-  
+  },[]);
+
   return (
     <IonPage>
       <IonHeader>
@@ -39,7 +49,7 @@ const Home: React.FC = () => {
                   setTaskContent(inputValue);
                 }} />
               </IonItem>
-              <IonButton expand='block' onClick={() => {
+              <IonButton class='ion-margin-bottom' expand='block' onClick={() => {
                 if (!taskContent) {
                   return;
                 }
@@ -56,6 +66,11 @@ const Home: React.FC = () => {
                 inputTaskRef.current.setFocus();
                 console.log(tasks);
               }}>Add</IonButton>
+
+              <IonList>
+                <IonListHeader><h1>Tasks:</h1></IonListHeader>
+                {taskListItems}
+              </IonList>
             </IonCol>
           </IonRow>
         </IonGrid>
