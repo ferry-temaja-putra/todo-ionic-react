@@ -1,4 +1,4 @@
-import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { useEffect, useRef, useState } from 'react';
 import { v1 as uuidv1 } from 'uuid';
 import './Home.css';
@@ -15,12 +15,20 @@ const Home: React.FC = () => {
   const inputTaskRef = useRef<any>(null);
   const taskListItems = tasks.map(task => {
     return(
-      <IonItem key={task.id}>
-        <IonLabel>
-          <h2>{`${task.date.toDateString()} ${task.date.toTimeString()}`}</h2>
-          <h1>{task.content}</h1>
-        </IonLabel>
-      </IonItem>
+      <IonItemSliding>
+        <IonItem key={task.id}>
+          <IonLabel>
+            <h2>{`${task.date.toDateString()} ${task.date.toTimeString()}`}</h2>
+            <h1>{task.content}</h1>
+          </IonLabel>
+        </IonItem>
+        <IonItemOptions side='end'>
+          <IonItemOption color='danger' onClick={() => {
+            const updatedTasks = tasks.filter(filteredTask => filteredTask.id !== task.id);
+            setTasks(updatedTasks);
+          }}>Delete</IonItemOption>
+        </IonItemOptions>
+      </IonItemSliding>
     )
   });
 
