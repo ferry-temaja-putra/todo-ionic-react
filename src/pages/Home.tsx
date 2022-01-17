@@ -1,13 +1,8 @@
 import { IonButton, IonCol, IonContent, IonGrid, IonHeader, IonInput, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { useEffect, useRef, useState } from 'react';
 import { v1 as uuidv1 } from 'uuid';
+import { Task } from '../models/Task';
 import './Home.css';
-
-interface Task {
-  id: string;
-  date: Date;
-  content: string;
-};
 
 const Home: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
